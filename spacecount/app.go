@@ -10,14 +10,11 @@ func Delay(ms int) {
 	time.Sleep(time.Duration(ms) * time.Millisecond)
 }
 
-// Fill in the gaps here, see the jsonclient example
-func getSpace() int {
-	return 6
-}
-
 func main() {
-	brightness := 25
+	brightness := 15
 	blinkt := NewBlinkt(brightness)
+
+	checkPeriodSeconds := 60        
 
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, os.Interrupt)
@@ -36,8 +33,7 @@ func main() {
 	Delay(100)
 
 	for {
-
-		num := getSpace()
+		num := getAstronautCount()
 
 		r := 150
 		g := 0
@@ -50,7 +46,7 @@ func main() {
 			Delay(100)
 		}
 
-		Delay(5000)
+		Delay(checkPeriodSeconds * 1000)
 	}
 	blinkt.Clear()
 	blinkt.Show()
