@@ -9,7 +9,7 @@ Running one of the examples:
 ```
 export GOPATH=$HOME/go/
 mkdir -p /home/pi/go/src/github.com/alexellis/
-git clone https://github.com/alexellis/go_blinkt_examples
+git clone https://github.com/alexellis/blinkt_go_examples
 
 cd progress
 go get
