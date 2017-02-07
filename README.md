@@ -2,7 +2,7 @@
 
 These examples go with the [Blinkt_go library](https://github.com/alexellis/blinkt_go/)
 
-The [Pimoroni Blinkt!](https://shop.pimoroni.com/) is an 8x RGB LED add-on for the Raspberry Pi.
+The [Pimoroni Blinkt!](https://shop.pimoroni.com/products/blinkt) is an 8x RGB LED add-on for the Raspberry Pi.
 
 Running one of the examples:
 
@@ -21,3 +21,5 @@ The Pimoroni Python examples are available here:
 https://github.com/pimoroni/blinkt/tree/master/examples
 
 PRs are welcome to port examples across to Go.
+
+![](https://cdn.shopify.com/s/files/1/0174/1800/products/Blinkt_-_Zero-2_1024x1024.JPG?v=1466525645)
