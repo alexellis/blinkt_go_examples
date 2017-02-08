@@ -1,32 +1,15 @@
 package main
 
 import . "github.com/alexellis/blinkt_go"
-import "time"
-import "os/signal"
-import "os"
-import "fmt"
-
-func Delay(ms int) {
-	time.Sleep(time.Duration(ms) * time.Millisecond)
-}
 
 func main() {
+
 	brightness := 15
 	blinkt := NewBlinkt(brightness)
 
-	checkPeriodSeconds := 60        
+	checkPeriodSeconds := 60
 
-	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt)
-
-	go func() {
-		for range signalChan {
-			fmt.Println("Control + C")
-			blinkt.Clear()
-			blinkt.Show()
-			os.Exit(1)
-		}
-	}()
+	blinkt.SetClearOnExit(true)
 
 	blinkt.Setup()
 

@@ -1,19 +1,12 @@
 package main
 
 import (
-	"fmt"
-	"os"
-	"os/signal"
 	"time"
 
 	. "github.com/alexellis/blinkt_go"
 )
 
-func Delay(ms int) {
-	time.Sleep(time.Duration(ms) * time.Millisecond)
-}
-
-func BreakOut(colours []int) (int, int, int) {
+func breakOut(colours []int) (int, int, int) {
 	r := colours[0]
 	g := colours[1]
 	b := colours[2]
@@ -25,17 +18,7 @@ func main() {
 	brightness := 25
 	blinkt := NewBlinkt(brightness)
 
-	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt)
-
-	go func() {
-		for range signalChan {
-			fmt.Println("Control + C")
-			blinkt.Clear()
-			blinkt.Show()
-			os.Exit(1)
-		}
-	}()
+	blinkt.SetClearOnExit(true)
 
 	colours := [10][3]int{
 		{0, 0, 0},       //0 black
@@ -68,19 +51,19 @@ func main() {
 		minuteten := minute / 10
 		minuteunit := minute % 10
 
-		r, g, b = BreakOut(colours[hourten][:])
+		r, g, b = breakOut(colours[hourten][:])
 		blinkt.SetPixel(0, r, g, b)
 		blinkt.SetPixel(1, r, g, b)
 
-		r, g, b = BreakOut(colours[hourunit][:])
+		r, g, b = breakOut(colours[hourunit][:])
 		blinkt.SetPixel(2, r, g, b)
 		blinkt.SetPixel(3, r, g, b)
 
-		r, g, b = BreakOut(colours[minuteten][:])
+		r, g, b = breakOut(colours[minuteten][:])
 		blinkt.SetPixel(4, r, g, b)
 		blinkt.SetPixel(5, r, g, b)
 
-		r, g, b = BreakOut(colours[minuteunit][:])
+		r, g, b = breakOut(colours[minuteunit][:])
 		blinkt.SetPixel(6, r, g, b)
 		blinkt.SetPixel(7, r, g, b)
 

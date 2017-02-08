@@ -1,20 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
-	"os"
-	"os/signal"
 	"time"
 
 	. "github.com/alexellis/blinkt_go"
 )
 
-func Delay(ms int) {
-	time.Sleep(time.Duration(ms) * time.Millisecond)
-}
-
-func ShuffleAndSlice(arr []int) []int {
+func shuffleAndSlice(arr []int) []int {
 
 	t := time.Now()
 	rand.Seed(int64(t.Nanosecond()))
@@ -28,7 +21,7 @@ func ShuffleAndSlice(arr []int) []int {
 	return arr[:subsetSize]
 }
 
-func IsIn(s *[]int, e *int) bool {
+func isIn(s *[]int, e *int) bool {
 	for _, a := range *s {
 		if a == *e {
 			return true
@@ -42,17 +35,7 @@ func main() {
 	brightness := 25
 	blinkt := NewBlinkt(brightness)
 
-	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt)
-
-	go func() {
-		for range signalChan {
-			fmt.Println("Control + C")
-			blinkt.Clear()
-			blinkt.Show()
-			os.Exit(1)
-		}
-	}()
+	blinkt.SetClearOnExit(true)
 
 	blinkt.Setup()
 
@@ -63,9 +46,9 @@ func main() {
 	for {
 
 		//There must be a more elegant way of doing this
-		pixels := ShuffleAndSlice(nums)
+		pixels := shuffleAndSlice(nums)
 		for _, i := range nums {
-			if IsIn(&pixels, &i) {
+			if isIn(&pixels, &i) {
 				blinkt.SetPixel(i, 255, 150, 0)
 			} else {
 				blinkt.SetPixel(i, 0, 0, 0)
