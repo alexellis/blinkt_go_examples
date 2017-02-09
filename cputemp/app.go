@@ -53,10 +53,14 @@ func showGraph(bl *Blinkt, v float64, r int, g int, b int) {
 func main() {
 	blinkt := NewBlinkt(20)
 	blinkt.Setup()
+	blinkt.SetClearOnExit(true)
 
-	celcius := getTemperature()
-	fmt.Println(celcius)
+	for {
+		celcius := getTemperature()
+		fmt.Printf("Temperature: %2.2f\n", celcius)
 
-	v := celcius / 100
-	showGraph(&blinkt, v, 255, 255, 255)
+		v := celcius / 100
+		showGraph(&blinkt, v, 255, 255, 255)
+		Delay(5000)
+	}
 }
