@@ -1,22 +1,5 @@
-FROM resin/rpi-raspbian
+FROM scratch
 
-# Install Go 1.7.5 and enough of a build-chain to build wiringpi (in C)
-RUN apt-get update && \
-    apt-get install -qy build-essential wiringpi git curl ca-certificates && \
-    curl -sSLO https://storage.googleapis.com/golang/go1.7.5.linux-armv6l.tar.gz && \
-	mkdir -p /usr/local/go && \
-	tar -xvf go1.7.5.linux-armv6l.tar.gz -C /usr/local/go/ --strip-components=1
+COPY progress /
 
-ENV PATH=$PATH:/usr/local/go/bin/
-ENV GOPATH=/go/
-
-RUN mkdir -p /go/src/github.com/alexellis/blinkt_go_examples/sysfs/progress
-WORKDIR /go/src/github.com/alexellis/blinkt_go_examples/sysfs/progress
-
-COPY app.go	.
-RUN go get -d -v
-
-RUN go build
-ENTRYPOINT []
-
-CMD ["./progress"]
+CMD ["/progress"]
