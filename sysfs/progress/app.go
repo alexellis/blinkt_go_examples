@@ -12,9 +12,10 @@ func main() {
 
 	Delay(100)
 
-	r := 150
+	r := 0
 	g := 0
-	b := 0
+	b := 255
+
 	for {
 		for pixel := 0; pixel < 8; pixel++ {
 			blinkt.Clear()
