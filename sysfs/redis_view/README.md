@@ -46,3 +46,10 @@ $ docker service create --name redis_view --mount type=bind,source=/sys,destinat
 
 # optionally: --constraint='node.role != manager' 
 ```
+
+You can invoke the sender as a service like this:
+
+```
+$ docker service rm redis_sender; docker service create --name redis_sender --replicas=1 --network=blinkt  -e ADDR=redis  alexellis2/redis-view:latest
+```
+
