@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"gopkg.in/redis.v5"
 	"os"
+	"time"
 )
-
-import . "github.com/alexellis/blinkt_go/sysfs"
 
 type LedColor struct {
 	Red   int `json:"r"`
@@ -32,12 +31,6 @@ func newClient() *redis.Client {
 }
 
 func main() {
-	brightness := 25
-	blinkt := NewBlinkt(brightness)
-	blinkt.SetClearOnExit(true)
-
-	blinkt.Setup()
-
 	client := newClient()
 	pong, err := client.Ping().Result()
 	fmt.Println(pong, err)
@@ -67,6 +60,6 @@ func main() {
 		if pubErr != nil {
 			panic(pubErr)
 		}
-		Delay(150)
+		time.Sleep(150 * time.Millisecond)
 	}
 }
