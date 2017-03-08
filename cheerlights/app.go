@@ -16,21 +16,12 @@ func main() {
 	Delay(100)
 
 	for {
-		num := getAstronautCount()
 
-		r := 150
-		g := 0
-		b := 0
+		r, g, b := getCheerlightColours()
+
 		blinkt.Clear()
-
-		for pixel := 0; pixel < num; pixel++ {
-			blinkt.SetPixel(pixel, r, g, b)
-			blinkt.Show()
-			Delay(100)
-		}
-
+		blinkt.SetAll(r, g, b)
+		blinkt.Show()
 		Delay(checkPeriodSeconds * 1000)
 	}
-	blinkt.Clear()
-	blinkt.Show()
 }

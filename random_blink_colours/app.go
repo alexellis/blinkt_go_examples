@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	brightness := 25
+	brightness := 0.5
 	blinkt := NewBlinkt(brightness)
 
 	blinkt.SetClearOnExit(true)
