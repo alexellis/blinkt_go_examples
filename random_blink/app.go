@@ -32,7 +32,7 @@ func isIn(s *[]int, e *int) bool {
 
 func main() {
 
-	brightness := 25
+	brightness := 0.5
 	blinkt := NewBlinkt(brightness)
 
 	blinkt.SetClearOnExit(true)

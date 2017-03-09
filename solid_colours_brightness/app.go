@@ -20,11 +20,11 @@ func main() {
 		step = step % 3
 		switch step {
 		case 0:
-			blinkt.SetAll(128, 0, 0)
+			blinkt.SetAll(128, 0, 0).SetBrightness(0.5)
 		case 1:
-			blinkt.SetAll(0, 128, 0)
+			blinkt.SetBrightness(0.1).SetAll(0, 128, 0)
 		case 2:
-			blinkt.SetAll(0, 0, 128)
+			blinkt.SetAll(0, 0, 128).SetBrightness(0.9)
 		}
 
 		step++

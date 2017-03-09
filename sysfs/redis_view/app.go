@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"gopkg.in/redis.v5"
 	"os"
 )
 
@@ -32,7 +31,7 @@ func newClient() *redis.Client {
 }
 
 func main() {
-	brightness := 25
+	brightness := 0.5
 	blinkt := NewBlinkt(brightness)
 	blinkt.SetClearOnExit(true)
 
@@ -52,7 +51,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		if(msg.Channel=="lights") {
+		if msg.Channel == "lights" {
 			ledMsg := LedMsg{}
 			jsonErr := json.Unmarshal([]byte(msg.Payload), &ledMsg)
 			if jsonErr != nil {
