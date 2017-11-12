@@ -1,21 +1,14 @@
-FROM resin/rpi-raspbian
+FROM golang:1.9.2 as build
 
-# Install Go 1.7.5 and enough of a build-chain to build wiringpi (in C)
-RUN apt-get update && \
-    apt-get install -qy build-essential wiringpi git curl ca-certificates && \
-    curl -sSLO https://storage.googleapis.com/golang/go1.7.5.linux-armv6l.tar.gz && \
-	mkdir -p /usr/local/go && \
-	tar -xvf go1.7.5.linux-armv6l.tar.gz -C /usr/local/go/ --strip-components=1
-
-ENV PATH=$PATH:/usr/local/go/bin/
-ENV GOPATH=/go/
-
+ENV GOPATH=/go
+RUN go get -d -u github.com/alexellis/blinkt_go/sysfs/gpio
 RUN mkdir -p /go/src/github.com/alexellis/blinkt_go_examples/cheerlights
 WORKDIR /go/src/github.com/alexellis/blinkt_go_examples/cheerlights
+COPY . .
+RUN GOARM=6 CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /usr/bin/app .
 
-COPY app.go cheerlights.go	./
-RUN go get -d -v
+FROM scratch
 
-RUN go build
+COPY --from=build /usr/bin/app /app
 
-CMD ["./cheerlights"]
+CMD ["/app"]

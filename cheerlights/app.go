@@ -1,6 +1,6 @@
 package main
 
-import . "github.com/alexellis/blinkt_go"
+import . "github.com/alexellis/blinkt_go/sysfs"
 
 func main() {
 
