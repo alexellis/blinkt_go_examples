@@ -26,15 +26,23 @@ func getCheerlightColours() (int, int, int) {
 		Timeout: time.Second * 3,
 	}
 	resp, getErr := netClient.Get("http://api.thingspeak.com/channels/1417/field/2/last.json")
+
 	if getErr != nil {
 		log.Panic(getErr)
 	}
+
+	if resp.Body != nil {
+		defer resp.Body.Close()
+	}
+
 	body, readErr := ioutil.ReadAll(resp.Body)
+
 	if readErr != nil {
 		log.Panic(getErr)
 	}
 
 	result := cheerlight{}
+
 	parseErr := json.Unmarshal(body, &result)
 	if parseErr != nil {
 		log.Panic("Can't parse response")
