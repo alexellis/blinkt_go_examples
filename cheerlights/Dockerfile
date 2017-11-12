@@ -1,4 +1,7 @@
-FROM golang:1.9.2 as build
+FROM alexellis2/go-armhf:1.9
+
+# Official image only works on RPi2/3 due to Docker issue with official images. 
+# FROM golang:1.9.2 as build
 
 ENV GOPATH=/go
 RUN go get -d -u github.com/alexellis/blinkt_go/sysfs/gpio
