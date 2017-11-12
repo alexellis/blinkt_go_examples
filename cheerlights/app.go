@@ -1,13 +1,30 @@
 package main
 
-import . "github.com/alexellis/blinkt_go/sysfs"
+import (
+	"os"
+	"strconv"
+
+	. "github.com/alexellis/blinkt_go/sysfs"
+)
+
+func getEnv(envVar string, assumed int) int {
+	if value, exists := os.LookupEnv(envVar); exists {
+		if period, err := strconv.Atoi(value); err == nil {
+			return period
+		}
+	}
+	return assumed
+}
+
+const defaultRefreshSeconds = 60
+const envRefreshSeconds = "refresh_seconds"
 
 func main() {
 
 	brightness := 0.5
 	blinkt := NewBlinkt(brightness)
 
-	checkPeriodSeconds := 60
+	checkPeriodSeconds := getEnv(envRefreshSeconds, defaultRefreshSeconds)
 
 	blinkt.SetClearOnExit(true)
 
